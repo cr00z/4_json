@@ -14,12 +14,12 @@ def gen_indent(indent_level):
     return '    ' * indent_level
 
 
-def gen_print_json_lst(dataset, open_char, close_char, indent_level):
+def gen_print_json_lst(json_data, open_char, close_char, indent_level):
     indent = gen_indent(indent_level)
     last_indent = gen_indent(indent_level - 1)
     out_list = []
-    for item in dataset:
-        string = '\n' + indent + pretty_print_json(item, indent_level + 1)
+    for json_elem in json_data:
+        string = '\n' + indent + pretty_print_json(json_elem, indent_level + 1)
         out_list.append(string)
     return open_char + ','.join(out_list) + '\n' + last_indent + close_char
 
@@ -27,20 +27,28 @@ def gen_print_json_lst(dataset, open_char, close_char, indent_level):
 def pretty_print_json(json_data, indent_level=1):
     if type(json_data) is list:
         return gen_print_json_lst(iter(json_data), '[', ']', indent_level)
-    elif type(json_data) is dict:
+
+    if type(json_data) is dict:
         return gen_print_json_lst(json_data.items(), '{', '}', indent_level)
-    elif type(json_data) is tuple:
+
+    if type(json_data) is tuple:
         key, value = json_data
         return '"' + key + '": ' + pretty_print_json(value, indent_level)
-    elif type(json_data) is int or type(json_data) is float:
+
+    if type(json_data) is int or \
+       type(json_data) is float:
         return str(json_data)
-    elif type(json_data) is str:
+
+    if type(json_data) is str:
         return '"' + json_data + '"'
-    elif type(json_data) is bool:
+
+    if type(json_data) is bool:
         # a little bit of a bollywood
         return str(json_data).lower()
-    elif json_data is None:
+
+    if json_data is None:
         return 'null'
+
     return ''
 
 
