@@ -1,6 +1,6 @@
 # Prettify JSON
 
-Script for JSON output in pretty form
+Script for JSON output in pretty form.
 
 # Quickstart
 
